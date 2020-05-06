@@ -16,7 +16,7 @@ From the "src" directory enter the following command:
 ```
 $ java com/Batey/PokerGame/Main [input arguments]
 ```
-You may also load the project in your desired IDE and run it.
+*You may also load the project in your desired IDE and run it.*
 
 ## Valid Input Arguments are as follows:
 [p1Name] [CardID] [CardID] [CardID] [CardID] [CardID] [p2Name] [CardID] [CardID] [CardID] [CardID] [CardID]
@@ -24,7 +24,8 @@ You may also load the project in your desired IDE and run it.
 **Where p1Name/p2Name** = player name     
 **CardID** = a two character ID with the following format [rank,suit]   
 **Ranks are as follows:** {2,3,4,5,6,7,8,9,T,J,Q,K,A}   
-**Suits are as follows:** {C,D,H,S}   
+**Suits are as follows:** {C,D,H,S}
+
 *Input must be formatted as specified. Any non-formatted input will result in undefined operation.*
 
 ## Example program call:
