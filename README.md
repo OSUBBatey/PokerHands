@@ -1,3 +1,3 @@
 # PokerHands
 
-A simple utility that compares two 5 card poker hands and prints the outcome to the console.
+A simple utility that compares poker hands and prints the outcome to the console.
