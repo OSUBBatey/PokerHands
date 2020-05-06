@@ -18,7 +18,7 @@ $ java com/Batey/PokerGame/Main [input arguments]
 You may also load the project in your desired IDE and run it.
 
 Valid Input Arguments are as follows:
-[p1Name],[CardID],[CardID],[CardID],[CardID],[CardID],[p2Name],[CardID],[CardID],[CardID],[CardID],[CardID]
+[p1Name] [CardID] [CardID] [CardID] [CardID] [CardID] [p2Name] [CardID] [CardID] [CardID] [CardID] [CardID]
 
 where p1Name/p2Name = player name
 CardID = a two character ID with the following format [rank,suit]
