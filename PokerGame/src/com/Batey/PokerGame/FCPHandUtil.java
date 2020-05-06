@@ -291,27 +291,36 @@ public class FCPHandUtil {
 					}
 				}			
 				
-				if(!rankCounts.containsKey(currentRank)) {
-					rankCounts.put(currentRank, 1);
+				if(!rankCounts.containsKey(currentRank)) { //If current card rank doesn't exist in the map, add it.
+					rankCounts.put(currentRank, 1); //Set count to one
 				}else {
-					rankCounts.replace(currentRank, rankCounts.get(currentRank)+1);
-					if(highGroupRank == null) {											
-						highGroupRank = currentRank;
-						lowGroupRank = currentRank;
-						highGroupCount = rankCounts.get(currentRank);
-						lowGroupCount = highGroupCount;
-						highGroupCard = card; 
-						lowGroupCard = card;
-					}else if(rankCounts.get(currentRank)> rankCounts.get(highGroupRank)) {						
+					rankCounts.replace(currentRank, rankCounts.get(currentRank)+1); //Else entry exists, increment count value by one
+					if(highGroupRank == null) {	//Store the rank of current grouping if none are stored
+						highGroupRank = currentRank; //Set large group to current
+						lowGroupRank = currentRank; //Set small group to current
+						highGroupCount = rankCounts.get(currentRank); // Set large group count to current
+						lowGroupCount = highGroupCount; //Set small group count
+						highGroupCard = card; //Set large group high card
+						lowGroupCard = card; // Set small group high card
+					}else if(rankCounts.get(currentRank)> rankCounts.get(highGroupRank)) {//If current grouping is larger than stored large group, update with current.						
 						lowGroupCard = highGroupCard;
 						lowGroupCount = highGroupCount;
 						highGroupRank = currentRank;
 						highGroupCard = card;						
 						highGroupCount = rankCounts.get(highGroupRank);
-					}else if(currentRank != highGroupRank && rankCounts.get(currentRank)> rankCounts.get(lowGroupRank)) {
-						lowGroupCard = card;
-						lowGroupRank = currentRank;
-						lowGroupCount = rankCounts.get(currentRank);
+					}else if(currentRank != highGroupRank &&rankCounts.get(currentRank) == rankCounts.get(lowGroupRank)) {//If current grouping size is equal to stored large grouping and ranks are different
+						
+						if(card.rankToInt(currentRank) > card.rankToInt(highGroupRank)) {//If Current card rank is higher than large grouping stored rank
+							//Move highGroup data to lowGroup
+							lowGroupCard = highGroupCard;
+							lowGroupRank = highGroupRank;
+							lowGroupCount = highGroupCount;
+							
+							//Store new highGroup data from current card
+							highGroupCard = card;
+							highGroupRank = currentRank;
+							highGroupCount = rankCounts.get(currentRank);
+						}
 					}
 				}				
 			}
