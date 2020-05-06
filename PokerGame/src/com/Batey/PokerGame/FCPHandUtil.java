@@ -339,6 +339,11 @@ public class FCPHandUtil {
 							highGroupRank = currentRank;
 							highGroupCount = rankCounts.get(currentRank);
 						}
+					}else if(card.rankToInt(currentRank) > rankCounts.get(lowGroupRank)){//Else check if secondary group needs updating
+						//Update Secondary Group
+						lowGroupCard = card;
+						lowGroupRank = currentRank;
+						lowGroupCount = rankCounts.get(currentRank);
 					}
 				}				
 			}
