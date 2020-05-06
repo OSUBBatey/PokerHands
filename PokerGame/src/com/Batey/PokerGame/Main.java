@@ -9,10 +9,6 @@ package com.Batey.PokerGame;
  */
 
 public class Main {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {		
 		FCPHandUtil fiveCardPoker = new FCPHandUtil();
 		fiveCardPoker.initialize(args);

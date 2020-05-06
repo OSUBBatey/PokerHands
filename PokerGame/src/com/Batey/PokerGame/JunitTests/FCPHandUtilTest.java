@@ -399,4 +399,189 @@ public class FCPHandUtilTest {
 		
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	public final void fourOKNumeralPlayerOneWins() {
+		
+		//Setup 
+		String expected = "Black wins. - with four of a kind: THREE of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: 3S 3D 3C 3H AD White: 2C 2H 4S 8C KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void fourOKNumeralPlayerTwoWins() {
+		
+		//Setup 
+		String expected = "White wins. - with four of a kind: THREE of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2C 2H 4S 8C KH White: 3S 3D 3C 3H AD");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void fourOKFacePlayerOneWins() {
+		
+		//Setup 
+		String expected = "Black wins. - with four of a kind: ACE of DIAMONDS";
+		ArrayList<String> inputArr = tokenGenerator("Black: AS AD AC AH 3D White: 2C 2H 4S 8C KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void fourOKFacePlayerTwoWins() {
+		
+		//Setup 
+		String expected = "White wins. - with four of a kind: ACE of DIAMONDS";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2C 2H 4S 8C KH White: AS AD AC AH 3D");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void royalFlushPlayerOneWins() {
+		
+		//Setup 
+		String expected = "Black wins. - with straight flush: ACE of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: JS TS QS KS AS  White: 2C 3H 4S 8C KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void royalFlushPlayerTwoWins() {
+		
+		//Setup 
+		String expected = "White wins. - with straight flush: ACE of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2C 3H 4S 8C KH White: JS TS QS KS AS");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void sFlushPlayerOneWins() {
+		
+		//Setup 
+		String expected = "Black wins. - with straight flush: NINE of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: 5S 6S 7S 8S 9S  White: 2C 3H 4S 8C KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void sFlushPlayerTwoWins() {
+		
+		//Setup 
+		String expected = "White wins. - with straight flush: NINE of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2C 3H 4S 8C KH White: 5S 6S 7S 8S 9S");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void tieBreakPlayerOneWins() {
+		
+		//Setup 
+		String expected = "Black wins. - with high card: SEVEN of SPADES";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2H 3D 7S 9C KD  White: 2D 3H 5C 9S KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void tieBreakPlayerTwoWins() {
+		//Setup 
+		String expected = "White wins. - with high card: SEVEN of CLUBS";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2C 3D 5S 9C KD  White: 2D 3H 7C 9S KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public final void tieTest() {
+		//Setup 
+		String expected = "Tie.";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2H 3D 5S 9C KD  White: 2D 3H 5C 9S KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
 }

@@ -404,7 +404,7 @@ public class FCPHandUtil {
 			}else if(isFlush) {//Flush
 				output = new FCPResult(FCPScoreRank.FLUSH, player.getHighCard());
 			}else if(highGroupCount == 4) {// Four-of-a-kind
-				output = new FCPResult(FCPScoreRank.FOUR_OF_A_KIND, player.getHighCard());
+				output = new FCPResult(FCPScoreRank.FOUR_OF_A_KIND, highGroupCard);
 			}else if(highGroupCount == 3) {//A grouping of three exists
 				if(lowGroupCount == 2) { //If a grouping of two also exists, then full house
 					output = new FCPResult(FCPScoreRank.FULL_HOUSE, highGroupCard, lowGroupCard);

@@ -8,7 +8,7 @@ package com.Batey.PokerGame.Enums;
  * @author Brian Batey
  */
 public enum FCPScoreRank {
-	S_FLUSH("full house"), FOUR_OF_A_KIND("four of a kind"), FULL_HOUSE("full house"),
+	S_FLUSH("straight flush"), FOUR_OF_A_KIND("four of a kind"), FULL_HOUSE("full house"),
 	FLUSH("flush"), STRAIGHT("straight"), THREE_OF_A_KIND("three of a kind"),
 	TWO_PAIR("two pair"), PAIR("pair"), HIGH_CARD("high card"), TIE("Tie.");
 	
