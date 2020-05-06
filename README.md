@@ -25,6 +25,7 @@ You may also load the project in your desired IDE and run it.
 **CardID** = a two character ID with the following format [rank,suit]   
 **Ranks are as follows:** {2,3,4,5,6,7,8,9,T,J,Q,K,A}   
 **Suits are as follows:** {C,D,H,S}   
+*Input must be formatted as specified. Any non-formatted input will result in undefined operation.*
 
 ## Example program call:
 ```
@@ -34,4 +35,4 @@ java com/Batey/PokerGame/Main Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH
 ```
 java com/Batey/PokerGame/Main Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH
 ```
-Input must be formatted as specified. Any non-formatted input will result in undefined operation.
+
