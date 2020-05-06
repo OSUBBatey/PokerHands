@@ -37,3 +37,6 @@ java com/Batey/PokerGame/Main Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH
 java com/Batey/PokerGame/Main Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH
 ```
 
+## JUnit
+Junit tests are included under the JunitTests folder.   
+Test suite gives 98% blackbox coverage.
