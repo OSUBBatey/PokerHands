@@ -255,41 +255,56 @@ public class FCPHandUtil {
 		 * @return
 		 * 		- an FCPResult object 
 		 */
-		private FCPResult getPlayerHandResult(CardPlayer player){
+		private FCPResult getPlayerHandResult(CardPlayer player){			
 			
-			//Tracking Flags
-			boolean isStraight = true; //If non-consecutive rank is found set to false
+			//Suit Tracking Variables
 			boolean isFlush = true; //If any suit is different set to false
-			Character heldSuit = null; //Suit value for flush tracking	
+			Character heldSuit = null; //Suit value for flush tracking
 			
+			//Straight Tracking Variables
+			boolean isStraight = true; //If non-consecutive rank is found set to false
 			Integer lastInt = null; //Track the value of the last card for straight tracking
 			
+			//Group Tracking Variables
 			int highGroupCount = 1, lowGroupCount = 1; //Track (high/low) group size counts
 			Character lowGroupRank = null, highGroupRank = null; //Track (high/low) group ranks
 			Card lowGroupCard = null, highGroupCard = null; //Store (high/low) group Card object
-			
-					
-			
-			FCPResult output = null; //Function output			
-			
 			Map<Character,Integer> rankCounts = new HashMap<>();//Map for storing group counts
 			
+			//Function output variable
+			FCPResult output = null; 
+			
+			/*
+			 * Iterate over the current player hand and update variables as necessary. 
+			 */
 			for(Card card: player.getPlayerHand().getCardArray()) {
 				char currentRank = card.getRank().getRankChar();
-				if(isStraight) {
-					if(lastInt == null) {
+				
+				/*
+				 * Test for Straight.
+				 */
+				if(isStraight) {//If straight possibility exists continue
+					if(lastInt == null) {//If variable is null
 						lastInt = card.rankToInt(currentRank);
-					}else if(lastInt+1 != card.rankToInt(currentRank)) {
-							isStraight = false;
+					}else if(lastInt+1 != card.rankToInt(currentRank)) {//Else if last value incremented by one is not equal to current value set to false
+							isStraight = false; 							
+					}else {//Else update the stored lastIntValue with the current card rank value
+						lastInt = card.rankToInt(currentRank);
 					}
 				}
-							
+				
+				/*
+				 * Test for Flush.
+				 */
 				if(heldSuit == null) { //Populate heldSuit if null
 					heldSuit = card.getSuit().getSuitChar();
-				}
+				}else {
 				isFlush = flushTest(isFlush, card, heldSuit); //Test for flush
+				}
 						
-				
+				/*
+				 * Test for Groupings.
+				 */
 				if(!rankCounts.containsKey(currentRank)) { //If current card rank doesn't exist in the map, add it.
 					rankCounts.put(currentRank, 1); //Set count to one
 				}else {
@@ -328,6 +343,54 @@ public class FCPHandUtil {
 				}				
 			}
 			
+			//Get FCPScore Rank and store for return
+			output = getScoreRank(isFlush, isStraight, highGroupCount, lowGroupCount, player, highGroupCard, lowGroupCard);
+			
+			return output;
+		}
+		
+		/**
+		 * Tests if the given Card suit is equal to the given heldSuit.
+		 * @param isFlush
+		 * 		- a boolean representing the current flush state, true if still possible, false otherwise
+		 * @param card
+		 * 		- a Card object from which to get a suit for testing
+		 * @param heldSuit
+		 * 		- a char object representing the the currently held suit value
+		 * @return
+		 * 		- a boolean value representing the current flush state, true if still possible, false otherwise
+		 */
+		private Boolean flushTest(Boolean isFlush, Card card, Character heldSuit) {
+			Boolean output = isFlush;
+			if(output) {//No need to test if flag is false
+				if(heldSuit != card.getSuit().getSuitChar()) {//If suit is different return false
+					output = false;
+				}
+			}
+			return output;
+		}
+		
+		/**
+		 * Returns a score rank based off the given variables. Score rank determination is based of the rules of the game poker.
+		 * @param isFlush
+		 * 		- a boolean representing if hand contains a flush
+		 * @param isStraight
+		 * 		- a boolean representing if hand contains a straight
+		 * @param highGroupCount
+		 * 		- member count of largest card grouping
+		 * @param lowGroupCount
+		 * 		- member count of second largest card grouping
+		 * @param player
+		 * 		- player object
+		 * @param highGroupCard
+		 * 		- Card object representing largest card grouping
+		 * @param lowGroupCard
+		 * 		- Card object representing second largest card grouping
+		 * @return
+		 * 		- a resultant FCPResult object 
+		 */
+		private FCPResult getScoreRank(Boolean isFlush, Boolean isStraight, int highGroupCount, int lowGroupCount, CardPlayer player, Card highGroupCard, Card lowGroupCard){
+			FCPResult output = null;
 			//Determine FCP Score Rank based off flags
 			if(isFlush && isStraight) {//Straight Flush
 				output = new FCPResult( FCPScoreRank.S_FLUSH, player.getHighCard());
@@ -354,57 +417,75 @@ public class FCPHandUtil {
 			}
 			return output;
 		}
-		
-		/**
-		 * Tests if the given Card suit is equal to the given heldSuit.
-		 * @param isFlush
-		 * 		- a boolean representing the current flush state, true if still possible, false otherwise
-		 * @param card
-		 * 		- a Card object from which to get a suit for testing
-		 * @param heldSuit
-		 * 		- a char object representing the the currently held suit value
-		 * @return
-		 * 		- a boolean value representing the current flush state, true if still possible, false otherwise
-		 */
-		private Boolean flushTest(Boolean isFlush, Card card, Character heldSuit) {
-			Boolean output = isFlush;
-			if(isFlush) {
-				if(heldSuit != card.getSuit().getSuitChar()) {
-					output = false;
-				}
-			}
-			return output;
-		}	
 	}
 	
 	/**
-	 * 
+	 * Stores the results of a player hand. Contains methods for retrieval and printing to console.
 	 * @author Brian Batey
 	 *
 	 */
-	private class FCPResult{		
-		private Card hCard, lCard;
-		private FCPScoreRank scoreRank;		
+	private class FCPResult{
 		
+		//Instance variables
+		private Card hCard, lCard; // (high/low) card for current rank result(not hand)
+		private FCPScoreRank scoreRank;	 //Score Rank	
+		
+		
+		/**
+		 * Constructor
+		 * @param sRank
+		 * 		- Score rank to be stored
+		 * @param highCard
+		 * 		- highest rank Card object associated with given score rank
+		 * 
+		 * @updates 
+		 * 		this.scoreRank, this.hCard
+		 */
 		public FCPResult(FCPScoreRank sRank, Card highCard) {			
 			this.scoreRank = sRank;						
 			this.hCard = highCard;	
 		}
 		
+		/**
+		 * Constructor
+		 * @param sRank
+		 * 		- Score rank to be stored
+		 * @param highCard
+		 * 		- highest rank Card object associated with given score rank
+		 * @param lowCard
+		 * 		- second highest rank Card object associated with given score rank
+		 * @updates 
+		 * 		this.scoreRank, this.hCard, this.lCard
+		 */
 		public FCPResult(FCPScoreRank sRank, Card highCard, Card lowCard) {			
 			this.scoreRank = sRank;				
 			this.hCard = highCard;
 			this.lCard = lowCard;
 		}
 		
+		/**
+		 * Returns highest card rank associated with @this scoreRank
+		 * @return
+		 * 		- an integer representing the rank
+		 */
 		public int getHighCardRank() {
 			return this.hCard.rankToInt(this.hCard.getRank().getRankChar());
 		}
 		
+		/**
+		 * Returns the FCPScoreVal of @this as an integer.
+		 * @return
+		 * 		- an integer representing the current FCPScoreRank value
+		 */
 		public int getFCPScoreVal() {
 			return FCPScoreRank.scoreRankVal(this.scoreRank);
 		}
 		
+		/**
+		 * Prints the results of @this to the console using the provided player name.
+		 * @param playerName
+		 * 		- String containing the player name associated with @this
+		 */
 		public void printFCPResult(String playerName) {			
 			if(this.scoreRank != FCPScoreRank.TIE) {
 				System.out.print(playerName + " wins. - with ");
