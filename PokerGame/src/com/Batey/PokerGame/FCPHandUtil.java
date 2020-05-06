@@ -354,28 +354,29 @@ public class FCPHandUtil {
 			}
 			return output;
 		}
+		
+		/**
+		 * Tests if the given Card suit is equal to the given heldSuit.
+		 * @param isFlush
+		 * 		- a boolean representing the current flush state, true if still possible, false otherwise
+		 * @param card
+		 * 		- a Card object from which to get a suit for testing
+		 * @param heldSuit
+		 * 		- a char object representing the the currently held suit value
+		 * @return
+		 * 		- a boolean value representing the current flush state, true if still possible, false otherwise
+		 */
+		private Boolean flushTest(Boolean isFlush, Card card, Character heldSuit) {
+			Boolean output = isFlush;
+			if(isFlush) {
+				if(heldSuit != card.getSuit().getSuitChar()) {
+					output = false;
+				}
+			}
+			return output;
+		}	
 	}
 	
-	/**
-	 * Tests if the given Card suit is equal to the given heldSuit.
-	 * @param isFlush
-	 * 		- a boolean representing the current flush state, true if still possible, false otherwise
-	 * @param card
-	 * 		- a Card object from which to get a suit for testing
-	 * @param heldSuit
-	 * 		- a char object representing the the currently held suit value
-	 * @return
-	 * 		- a boolean value representing the current flush state, true if still possible, false otherwise
-	 */
-	private Boolean flushTest(Boolean isFlush, Card card, Character heldSuit) {
-		Boolean output = isFlush;
-		if(isFlush) {
-			if(heldSuit != card.getSuit().getSuitChar()) {
-				output = false;
-			}
-		}
-		return output;
-	}
 	/**
 	 * 
 	 * @author Brian Batey
