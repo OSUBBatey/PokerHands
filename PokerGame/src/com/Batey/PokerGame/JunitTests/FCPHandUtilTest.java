@@ -584,4 +584,26 @@ public class FCPHandUtilTest {
 		
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	public final void multipleInputTest() {
+		//Setup 
+		String expected = "White wins. - with high card: ACE of HEARTS\r\n" + 
+				"Black wins. - with full house: FOUR of CLUBS over TWO of HEARTS\r\n" + 
+				"Black wins. - with high card: NINE of CLUBS\r\n" + 
+				"Tie.";
+		ArrayList<String> inputArr = tokenGenerator("Black: 2H 3D 5S 9C KD  White: 2C 3H 4S 8C AH" + 
+				" Black: 2H 4S 4C 2D 4H  White: 2S 8S AS QS 3S" + 
+				" Black: 2H 3D 5S 9C KD  White: 2C 3H 4S 8C KH" + 
+				" Black: 2H 3D 5S 9C KD  White: 2D 3H 5C 9S KH");
+		
+		//Init class under test
+		cUT.initialize(inputArr.toArray(new String[inputArr.size()]));
+		cUT.run();
+		
+		//Remove line endings
+		String actual = contentStream.toString().substring(0, contentStream.toString().length()-2);		
+		
+		assertEquals(expected, actual);
+	}
 }
