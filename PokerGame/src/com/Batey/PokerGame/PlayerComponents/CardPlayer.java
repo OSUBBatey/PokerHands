@@ -7,7 +7,7 @@ package com.Batey.PokerGame.PlayerComponents;
 public class CardPlayer {	
 	//Class variables
 	private String player_name;	
-	private Hand player_hand;	
+	private FCPHand player_hand;	
     
 	/**
 	 * CardPlayer Constructor
@@ -21,7 +21,7 @@ public class CardPlayer {
 	 * -this.player_hand
 	 * </pre>
 	 */
-	public CardPlayer(String playerName, Hand playerHand) {
+	public CardPlayer(String playerName, FCPHand playerHand) {
 		assert playerName != null : "ERROR: Player Name input was Null!";		
 		assert playerHand != null : "ERROR: Player Hand input was Null!";
 		
@@ -42,7 +42,7 @@ public class CardPlayer {
 	 * Prints the player hand of @this to console
 	 */
 	public void printPlayerHand() {		
-		for(int i=0; i<this.player_hand.handArray.size();i++) {
+		for(int i=0; i<this.player_hand.getCardArray().size();i++) {
 			System.out.print(this.player_hand.getCard(i).getRank());
 			System.out.println(" OF " + this.player_hand.getCard(i).getSuit());
 		}
@@ -53,7 +53,7 @@ public class CardPlayer {
 	 * @return	
 	 * 		- a Hand object
 	 */
-	public Hand getPlayerHand() {
+	public FCPHand getPlayerHand() {
 		return this.player_hand;
 	}
 	
@@ -63,6 +63,6 @@ public class CardPlayer {
 	 * 	- a Card object
 	 */
 	public Card getHighCard() {
-		return ((FCPHand)this.player_hand).getHighCard();
+		return (this.player_hand).getHighCard();
 	}
 }
